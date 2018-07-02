@@ -12,6 +12,8 @@ namespace Assets.Code.Interfaces {
 
         void ExecuteState();
 
+        void ExecuteState_Fixed();
+
         void ExitState();
     }
 }

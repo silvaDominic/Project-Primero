@@ -10,8 +10,6 @@ public class StateMachine : MonoBehaviour {
 
     public void ChangeState(IState newState) {
         // Check if there is a current state and exit it if there is
-        Debug.Log("CHANGE STATE:");
-        Debug.Log("New State: " + newState);
         if (this.currentState != null) {
             this.currentState.ExitState();
         }
@@ -24,11 +22,16 @@ public class StateMachine : MonoBehaviour {
     }
 
     public void ExecuteStateUpdate() {
-        Debug.Log("EXECUTE STATE:");
         var stagedState = this.currentState;
-        Debug.Log("Staged State: " + stagedState);
         if (stagedState != null) {
             stagedState.ExecuteState();
+        }
+    }
+
+    public void ExecuteFixedStateUpdate() {
+        var stagedState = this.currentState;
+        if (stagedState != null) {
+            stagedState.ExecuteState_Fixed();
         }
     }
 

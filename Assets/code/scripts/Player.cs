@@ -9,7 +9,7 @@ namespace Assets.Code.Scripts {
 
         public float movementForce = 15f;
         public float maxMovementSpeed = 2f;
-        public float jumpForce = 100f;
+        public float jumpForce = 15f;
         public float doubleJumpForce = 75f;
         [Tooltip("The amount the movement force will be divded by when moving from left to right in the air")]
         public float airBornMovementDetraction = 0;
@@ -36,6 +36,7 @@ namespace Assets.Code.Scripts {
             foreach (string controller in Input.GetJoystickNames()) {
                 Debug.Log(controller);
             }
+            //this.SetGrounded(this.anim.GetBool("isGrounded"));
             this.movementStateMachine.ChangeState(new IdleState(this));
         }
 
@@ -43,27 +44,33 @@ namespace Assets.Code.Scripts {
          void Update() {
             // Prevent rotation of player due to physics
             transform.rotation = Quaternion.Euler(new Vector3(lockAxis, lockAxis, lockAxis));
-
-            if (anim.GetFloat("Speed") > 0.01) {
-                this.movementStateMachine.ChangeState(new RunningState(this));
-            } else if (anim.GetFloat("Speed") < 0.01) {
-                this.movementStateMachine.ChangeState(new IdleState(this));
-            }
+            this.movementStateMachine.ExecuteStateUpdate();
          }
 
          void FixedUpdate() {
-            this.movementStateMachine.ExecuteStateUpdate();
+            this.movementStateMachine.ExecuteFixedStateUpdate();
          }
 
         public bool CheckIfGrounded() {
             return this.grounded;
+        }
+
+        public void SetGrounded(bool groundedState) {
+            this.grounded = groundedState;
+        }
+
+        public bool CheckIfJumping() {
+            return this.isJumping;
+        }
+
+        public void SetJumping(bool jumpingState) {
+            this.isJumping = jumpingState;
         }
     }
 }
 
 /*TODO 
  * 
- * Create better link between state machine and animator
- * Find out why animator is not responding to conditions
+ * Prevent Jump force from being fired multiple times
  * 
  */

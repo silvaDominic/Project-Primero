@@ -14,12 +14,14 @@ namespace Assets.Code.Scripts {
 
         private void OnTriggerEnter2D(Collider2D col) {
             Debug.Log("Colliding with ground");
-            player.grounded = true;
+            player.SetGrounded(true);
+            Debug.Log("GROUNDED SCRIPT: " + player.CheckIfGrounded());
         }
 
-        private void OnTriggerExit(Collider col) {
-            Debug.Log("Leaving Ground");
-            player.grounded = false;
+        private void OnTriggerExit2D(Collider2D col) {
+            Debug.Log("Leaving ground");
+            player.SetGrounded(false);
+            Debug.Log("GROUNDED SCRIPT: " + player.CheckIfGrounded());
         }
     }
 }

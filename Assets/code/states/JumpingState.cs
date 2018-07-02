@@ -15,20 +15,23 @@ namespace Assets.Code.States {
         }
 
         public void EnterState() {
-            
+            Debug.Log("Jumping State Loaded");
         }
 
         public void ExecuteState() {
-            float LeftJoyV = Input.GetAxis("LeftJoystickVertical");
-
+            Debug.Log("JUMPING STATE: " + player.CheckIfGrounded());
             player.anim.SetBool("isGrounded", player.CheckIfGrounded());
-            player.anim.SetBool("isJumping", player.isJumping);
+            if (player.anim.GetBool("isGrounded")) {
+                player.movementStateMachine.SwitchToPreviousState();
+            }
+        }
 
-            player.rb2d.AddForce(new Vector2(0, player.jumpForce) * LeftJoyV, ForceMode2D.Impulse);
+        public void ExecuteState_Fixed() {
+
         }
 
         public void ExitState() {
-
+            Debug.Log("Exiting Jumping State");
         }
     }
 }
