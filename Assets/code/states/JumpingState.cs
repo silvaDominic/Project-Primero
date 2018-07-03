@@ -15,10 +15,16 @@ namespace Assets.Code.States {
         }
 
         public void EnterState() {
+            player.anim.SetBool("isJumping", true);
             Debug.Log("Jumping State Loaded");
         }
 
         public void ExecuteState() {
+            float LeftJoyH = Input.GetAxis("LeftJoystickHorizontal");
+
+            player.rb2d.AddForce(((Vector2.right * player.movementForce) * LeftJoyH) / player.airBornMovementDetraction);
+            player.anim.SetFloat("Speed", Mathf.Abs(player.rb2d.velocity.x));
+
             Debug.Log("JUMPING STATE: " + player.CheckIfGrounded());
             player.anim.SetBool("isGrounded", player.CheckIfGrounded());
             if (player.anim.GetBool("isGrounded")) {
@@ -31,6 +37,7 @@ namespace Assets.Code.States {
         }
 
         public void ExitState() {
+            player.anim.SetBool("isJumping", false);
             Debug.Log("Exiting Jumping State");
         }
     }

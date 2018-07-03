@@ -13,8 +13,8 @@ namespace Assets.Code.Scripts {
         public float doubleJumpForce = 75f;
         [Tooltip("The amount the movement force will be divded by when moving from left to right in the air")]
         public float airBornMovementDetraction = 0;
-        public bool grounded = false;
-        public bool isJumping = false;
+        private bool grounded = false;
+        private bool isJumping = false;
         
         private int lockAxis = 0;
         [HideInInspector]

@@ -9,6 +9,7 @@ namespace Assets.Code.States {
     public class IdleState : IState {
 
         private Player player;
+        private bool axisInUse = false;
 
         public IdleState(Player player) {
             this.player = player;
@@ -32,14 +33,30 @@ namespace Assets.Code.States {
         public void ExecuteState_Fixed() {
             float LeftJoyH = Input.GetAxis("LeftJoystickHorizontal");
             float LeftJoyV = Input.GetAxisRaw("LeftJoystickVertical");
+            float deadzone = 0.25f;
+
+            Vector2 stickInput = new Vector2(Input.GetAxis("LeftJoystickHorizontal"), Input.GetAxisRaw("LeftJoystickVertical"));
+            if (Mathf.Abs(stickInput.x) < deadzone)
+                stickInput.x = 0.0f;
+            if (Mathf.Abs(stickInput.y) < deadzone)
+                stickInput.y = 0.0f;
+
 
             player.anim.SetBool("isGrounded", player.CheckIfGrounded());
-            //player.anim.SetBool("isJumping", player.CheckIfJumping());
-            player.anim.SetFloat("Speed", Mathf.Abs(Input.GetAxis("LeftJoystickHorizontal")));
+            player.anim.SetFloat("Speed", Mathf.Abs(player.rb2d.velocity.x));
 
             player.rb2d.AddForce((Vector2.right * player.movementForce) * LeftJoyH);
 
-            player.rb2d.AddForce(new Vector2(0, player.jumpForce) * -LeftJoyV);
+            Debug.Log(LeftJoyV);
+            if (LeftJoyV == -1) {
+                if (!this.axisInUse) {
+                    this.axisInUse = true;
+                    Vector2 jumpForceApplied = new Vector2(0, player.jumpForce);
+                    player.rb2d.AddForce(jumpForceApplied);
+                }
+            } else if (LeftJoyV <= 0) {
+                this.axisInUse = false;
+            }
         }
 
         public void ExitState() {
