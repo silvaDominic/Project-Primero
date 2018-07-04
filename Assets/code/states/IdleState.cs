@@ -6,10 +6,11 @@ using Assets.Code.Scripts;
 
 namespace Assets.Code.States {
 
+    [RequireComponent(typeof(IState))]
+    [RequireComponent(typeof(Player))]
     public class IdleState : IState {
 
         private Player player;
-        private bool axisInUse = false;
 
         public IdleState(Player player) {
             this.player = player;
@@ -20,43 +21,36 @@ namespace Assets.Code.States {
         }
 
         public void ExecuteState() {
-            if (player.anim.GetFloat("Speed") > 0.01) {
+            float LeftJoyV = Input.GetAxisRaw(Constants.LEFT_JOY_VERTICAL);
+
+            player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
+
+            // Check speed and grounded properties in animator to decide which state to switch to
+            if (Mathf.Abs(Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL)) > 0) {
                 player.movementStateMachine.ChangeState(new RunningState(player));
             }
 
-            Debug.Log("IDLE STATE: " + player.CheckIfGrounded());
-            if (!player.anim.GetBool("isGrounded")) {
+            // Change to jumping state if player is not grounded
+            // *** Might need additional conditions in the future
+            if (!player.anim.GetBool(Constants.IS_GROUNDED_STATE)) {
                 player.movementStateMachine.ChangeState(new JumpingState(player));
+            }
+
+            // Check when joy axis is 'up' (-1) and then check if axis has already been triggered
+            // If it has not apply jump force.
+            if (LeftJoyV == -1) {
+                if (!player.CheckIfAxisInUse()) {
+                    player.SetAxis(true);
+                    Vector2 jumpForceApplied = new Vector2(0, player.jumpForce);
+                    player.rb2d.AddForce(jumpForceApplied);
+                }
+            // If joy axis is centered or 'down', reset axis state.
+            } else if (LeftJoyV <= 0) {
+                player.SetAxis(false);
             }
         }
 
         public void ExecuteState_Fixed() {
-            float LeftJoyH = Input.GetAxis("LeftJoystickHorizontal");
-            float LeftJoyV = Input.GetAxisRaw("LeftJoystickVertical");
-            float deadzone = 0.25f;
-
-            Vector2 stickInput = new Vector2(Input.GetAxis("LeftJoystickHorizontal"), Input.GetAxisRaw("LeftJoystickVertical"));
-            if (Mathf.Abs(stickInput.x) < deadzone)
-                stickInput.x = 0.0f;
-            if (Mathf.Abs(stickInput.y) < deadzone)
-                stickInput.y = 0.0f;
-
-
-            player.anim.SetBool("isGrounded", player.CheckIfGrounded());
-            player.anim.SetFloat("Speed", Mathf.Abs(player.rb2d.velocity.x));
-
-            player.rb2d.AddForce((Vector2.right * player.movementForce) * LeftJoyH);
-
-            Debug.Log(LeftJoyV);
-            if (LeftJoyV == -1) {
-                if (!this.axisInUse) {
-                    this.axisInUse = true;
-                    Vector2 jumpForceApplied = new Vector2(0, player.jumpForce);
-                    player.rb2d.AddForce(jumpForceApplied);
-                }
-            } else if (LeftJoyV <= 0) {
-                this.axisInUse = false;
-            }
         }
 
         public void ExitState() {

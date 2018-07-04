@@ -5,29 +5,30 @@ using Assets.Code.States;
 
 namespace Assets.Code.Scripts {
 
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(StateMachine))]
     public class Player : MonoBehaviour {
 
+        // Movement variables
         public float movementForce = 15f;
         public float maxMovementSpeed = 2f;
         public float jumpForce = 15f;
         public float doubleJumpForce = 75f;
         [Tooltip("The amount the movement force will be divded by when moving from left to right in the air")]
         public float airBornMovementDetraction = 0;
-        private bool grounded = false;
-        private bool isJumping = false;
-        
+
+        private bool axisInUse = false;
         private int lockAxis = 0;
-        [HideInInspector]
-        public Animator anim;
-        [HideInInspector]
-        public Rigidbody2D rb2d;
-        [HideInInspector]
-        public StateMachine movementStateMachine;
+        [HideInInspector] public Animator anim;
+        [HideInInspector] public Rigidbody2D rb2d;
+        [HideInInspector] public StateMachine movementStateMachine;
 
         void Awake() {
+            // Initialize core player objects
             rb2d = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
-            movementStateMachine = new StateMachine();
+            movementStateMachine = GetComponent<StateMachine>();
         }
 
         // Use this for initialization
@@ -36,41 +37,36 @@ namespace Assets.Code.Scripts {
             foreach (string controller in Input.GetJoystickNames()) {
                 Debug.Log(controller);
             }
-            //this.SetGrounded(this.anim.GetBool("isGrounded"));
+
+            // Set default state to Idle
             this.movementStateMachine.ChangeState(new IdleState(this));
         }
 
         // Update is called once per frame
          void Update() {
-            // Prevent rotation of player due to physics
+            // Prevent rotation of player due to physics and execute regular update logic for state machine
             transform.rotation = Quaternion.Euler(new Vector3(lockAxis, lockAxis, lockAxis));
             this.movementStateMachine.ExecuteStateUpdate();
          }
 
+        // Used for physics updates
          void FixedUpdate() {
-            this.movementStateMachine.ExecuteFixedStateUpdate();
+            // Execute physics related logic for state machine
+            this.movementStateMachine.ExecuteStateFixedUpdate();
          }
 
-        public bool CheckIfGrounded() {
-            return this.grounded;
+        public bool CheckIfAxisInUse() {
+            return this.axisInUse;
         }
 
-        public void SetGrounded(bool groundedState) {
-            this.grounded = groundedState;
-        }
-
-        public bool CheckIfJumping() {
-            return this.isJumping;
-        }
-
-        public void SetJumping(bool jumpingState) {
-            this.isJumping = jumpingState;
+        public void SetAxis(bool axisState) {
+            this.axisInUse = axisState;
         }
     }
 }
 
 /*TODO 
  * 
- * Prevent Jump force from being fired multiple times
+ * Create 'action' camera
  * 
  */

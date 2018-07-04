@@ -493,8 +493,8 @@ MonoBehaviour:
   movementForce: 15
   maxMovementSpeed: 10
   jumpForce: 275
-  doubleJumpForce: 75
-  airBornMovementDetraction: 0
+  doubleJumpForce: 200
+  airBornMovementDetraction: 6
   anim: {fileID: 0}
   rb2d: {fileID: 0}
   movementStateMachine: {fileID: 0}
