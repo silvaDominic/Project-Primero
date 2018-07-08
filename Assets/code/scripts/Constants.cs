@@ -18,5 +18,7 @@ namespace Assets.Code.Scripts {
         public const string X_BUTTON = "X-Button";
         public const string LEFT_TRIGGER = "LeftTrigger";
         public const string RIGHT_TRIGGER = "RightTrigger";
+
+        public const string PLAYERS_OBJECT = "Players";
     }
 }
