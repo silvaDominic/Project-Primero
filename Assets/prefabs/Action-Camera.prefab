@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1188848584724600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -4, z: -4}
+  m_LocalPosition: {x: -0, y: -4, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199bb90397daf5440bdc2b1224cb605f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPadding: 0.5
+  minimumCameraDistance: -3
+  defaultPlayerDistance: 3.33
 --- !u!124 &124175172826401468
 Behaviour:
   m_ObjectHideFlags: 1

@@ -11,8 +11,8 @@ namespace Assets.Code.Scripts {
         private Transform[] players;
         private Camera actionCamera;
 
-        public float minimumCameraDistance = -3f;
-        public float defaultPlayerDistance = 3.33f;
+        public float minimumCameraDistance = -4f;
+        public float defaultPlayerDistance = 3.5f;
 
         // Use this for initialization
         void Start() {
@@ -33,9 +33,10 @@ namespace Assets.Code.Scripts {
             float BottomEdge = FindBottomEdgePlayer();
             float TopEdge = FindTopEdgePlayer();
 
-            // Calculate the max horizontal and vertical distances between all players
+            // Calculate the max horizontal, vertical, combined distances between all players to use for camera's z index
             float maxHorizontalPlayerSeparation = Mathf.Sqrt(Mathf.Pow(LeftEdge - RightEdge, 2));
             float maxVerticalPlayerSeparation = Mathf.Sqrt(Mathf.Pow(BottomEdge - TopEdge, 2));
+            float maxPlayerSeparation = Mathf.Sqrt(Mathf.Pow(LeftEdge - RightEdge, 2) + Mathf.Pow(BottomEdge - TopEdge, 2));
 
             // Calculate the distance to center of viewbox from max player separation
             float horizontalDistanceToCenter = maxHorizontalPlayerSeparation / 2;
@@ -44,7 +45,7 @@ namespace Assets.Code.Scripts {
             // Calculate the ratio between the minimum camera distance and an arbitrary default player distance
             float cameraZIndexFactor = (minimumCameraDistance / defaultPlayerDistance);
             // Calculate the camera's z index (distance from 'action') using the z index factor
-            float zIndex = maxHorizontalPlayerSeparation * cameraZIndexFactor;
+            float zIndex = maxPlayerSeparation * cameraZIndexFactor;
 
             // Update that camera's z index
             // If it falls below the minimumCameraDistance, set it equal to the minimum
