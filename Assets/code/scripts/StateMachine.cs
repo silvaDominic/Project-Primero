@@ -49,6 +49,17 @@ public class StateMachine : MonoBehaviour {
     }
 
     /// <summary>
+    /// Executes a states late update method
+    /// This is called by the Monobehaviour LATE update method in the Player controller.
+    /// </summary>
+    public void ExecuteStateLateUpdate() {
+        var stagedState = this.currentState;
+        if (stagedState != null) {
+            stagedState.ExecuteState_Late();
+        }
+    }
+
+    /// <summary>
     /// Switches to the previous state
     /// </summary>
     public void SwitchToPreviousState() {
@@ -56,7 +67,6 @@ public class StateMachine : MonoBehaviour {
         if (this.currentState != null) {
             this.currentState.ExitState();
         }
-
 
         // Check if a previous state exists and (re)enter it if it does.
         if (this.previousState != null) {

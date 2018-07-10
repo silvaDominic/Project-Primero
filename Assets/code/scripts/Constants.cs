@@ -20,5 +20,6 @@ namespace Assets.Code.Scripts {
         public const string RIGHT_TRIGGER = "RightTrigger";
 
         public const string PLAYERS_OBJECT = "Players";
+        public const string GROUND_LAYER = "Ground";
     }
 }

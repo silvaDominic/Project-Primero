@@ -23,16 +23,26 @@ namespace Assets.Code.States {
         }
 
         public void ExecuteState() {
-            //player.movementStateMachine.ChangeState(new FatiguedState());
-            // Return to Idle state if double jumping and grounded state are true
-            if (player.anim.GetBool(Constants.IS_DOUBLE_JUMPING_STATE) && player.anim.GetBool(Constants.IS_GROUNDED_STATE)) {
-                player.movementStateMachine.ChangeState(new IdleState(player));
+            //Vector2 jumpForceApplied = new Vector2(0, player.doubleJumpForce);
+            if (player.CheckIfAxisInUse()) {
+                player.rb2d.velocity = new Vector2(player.rb2d.velocity.x, player.doubleJumpVelocity);
+                player.SetAxisInUse(false);
             }
-            Debug.Log("CALL FATIGUED STATE");
+
+            //if (player.rb2d.velocity.y < 0) {
+            //    player.movementStateMachine.ChangeState(new FallingState(player));
+            //}
         }
 
         public void ExecuteState_Fixed() {
 
+        }
+
+        public void ExecuteState_Late() {
+            if (player.anim.GetBool(Constants.IS_GROUNDED_STATE)) {
+                Debug.Log("SWITCHING AT: " + Time.time + " GROUNDED IS TRUE");
+                player.movementStateMachine.ChangeState(new IdleState(player));
+            }
         }
 
         public void ExitState() {

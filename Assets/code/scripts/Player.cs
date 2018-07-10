@@ -13,8 +13,8 @@ namespace Assets.Code.Scripts {
         // Movement variables
         public float movementForce = 15f;
         public float maxMovementSpeed = 2f;
-        public float jumpForce = 15f;
-        public float doubleJumpForce = 75f;
+        public float jumpVelocity = 8f;
+        public float doubleJumpVelocity = 6f;
         [Tooltip("The amount the movement force will be divded by when moving from left to right in the air")]
         public float airBornMovementDetraction = 0;
 
@@ -55,11 +55,15 @@ namespace Assets.Code.Scripts {
             this.movementStateMachine.ExecuteStateFixedUpdate();
          }
 
+        private void LateUpdate() {
+            this.movementStateMachine.ExecuteStateLateUpdate();
+        }
+
         public bool CheckIfAxisInUse() {
             return this.axisInUse;
         }
 
-        public void SetAxis(bool axisState) {
+        public void SetAxisInUse(bool axisState) {
             this.axisInUse = axisState;
         }
     }

@@ -21,7 +21,7 @@ namespace Assets.Code.States {
         }
 
         public void ExecuteState() {
-            float LeftJoyV = Input.GetAxisRaw(Constants.LEFT_JOY_VERTICAL);
+            float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
 
             // Change to Idle state if players speed falls below 0.01
             if (player.anim.GetFloat(Constants.SPEED) < 0.01) {
@@ -37,32 +37,28 @@ namespace Assets.Code.States {
                 player.rb2d.velocity = new Vector2(-player.maxMovementSpeed, player.rb2d.velocity.y);
             }
 
-            // Change to jumping state if player is not grounded
-            // *** Might need additional conditions in the future
-            if (!player.anim.GetBool(Constants.IS_GROUNDED_STATE)) {
-                player.movementStateMachine.ChangeState(new JumpingState(player));
-            }
-
             // Set speed of player in animator
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
 
             // Check when joy axis is 'up' (-1) and then check if axis has already been triggered
             // If it has not apply jump force.
-            if (LeftJoyV == -1) {
+            if (LeftJoyV == -1 && player.anim.GetBool(Constants.IS_GROUNDED_STATE)) {
                 if (!player.CheckIfAxisInUse()) {
-                    player.SetAxis(true);
-                    Vector2 jumpForceApplied = new Vector2(0, player.jumpForce);
-                    player.rb2d.AddForce(jumpForceApplied);
+                    player.SetAxisInUse(true);
+                    player.movementStateMachine.ChangeState(new JumpingState(player));
                 }
-             // If joy axis is centered or 'down', reset axis state.
-            } else if (LeftJoyV <= 0) {
-                player.SetAxis(false);
+            } else if (LeftJoyV > -1) {
+                player.SetAxisInUse(false);
             }
         }
 
         public void ExecuteState_Fixed() {
             // Apple horizontal force continuously according to joy axis direction
             player.rb2d.AddForce((Vector2.right * player.movementForce) * Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL));
+        }
+
+        public void ExecuteState_Late() {
+            
         }
 
         public void ExitState() {

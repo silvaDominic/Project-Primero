@@ -27,6 +27,10 @@ namespace Assets.Code.Scripts {
 
         // Update is called once per frame
         void Update() {
+
+        }
+
+        private void LateUpdate() {
             // Find all left, right, top, and bottom edge players
             float LeftEdge = FindLeftEdgePlayer();
             float RightEdge = FindRightEdgePlayer();
@@ -40,7 +44,7 @@ namespace Assets.Code.Scripts {
 
             // Calculate the distance to center of viewbox from max player separation
             float horizontalDistanceToCenter = maxHorizontalPlayerSeparation / 2;
-            float verticalDistanceToCenter = maxVerticalPlayerSeparation/ 2;
+            float verticalDistanceToCenter = maxVerticalPlayerSeparation / 2;
 
             // Calculate the ratio between the minimum camera distance and an arbitrary default player distance
             float cameraZIndexFactor = (minimumCameraDistance / defaultPlayerDistance);
