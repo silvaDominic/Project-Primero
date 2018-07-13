@@ -25,7 +25,6 @@ namespace Assets.Code.Scripts {
                 // Set parameter in animator to true if colliding with ground
                 Debug.Log("Leaving: " + groundCheck.collider);
                 player.anim.SetBool(Constants.IS_GROUNDED_STATE, false);
-                Debug.Log("Leaving ground at: " + Time.time);
             }
         }
 

@@ -12,10 +12,10 @@ namespace Assets.Code.Scripts {
 
         public const string LEFT_JOY_HORIZONTAL = "LeftJoystickHorizontal";
         public const string LEFT_JOY_VERTICAL = "LeftJoystickVertical";
-        public const string Y_BUTTON = "Y-Button";
-        public const string B_BUTTON = "B-Button";
-        public const string A_BUTTON = "A-Button";
-        public const string X_BUTTON = "X-Button";
+        public const string Y_BUTTON = "Button-3";
+        public const string X_BUTTON = "Button-2";
+        public const string B_BUTTON = "Button-1";
+        public const string A_BUTTON = "Button-0";
         public const string LEFT_TRIGGER = "LeftTrigger";
         public const string RIGHT_TRIGGER = "RightTrigger";
 

@@ -22,7 +22,6 @@ namespace Assets.Code.States {
         public void EnterState() {
             // Set jumping parameter in animator to true upon entering state
             player.anim.SetBool(Constants.IS_JUMPING_STATE, true);
-            Debug.Log("Jumping State Loaded at: " + Time.time);
         }
 
         public void ExecuteState() {
@@ -60,7 +59,6 @@ namespace Assets.Code.States {
             await Task.Delay(time);
             // Switch back to previous state if player has returned to the ground
             if (player.anim.GetBool(Constants.IS_GROUNDED_STATE) && executeJump == true) {
-                Debug.Log("SWITCHING AT: " + Time.time + " GROUNDED IS TRUE");
                 player.movementStateMachine.SwitchToPreviousState();
             }
         }

@@ -22,6 +22,7 @@ namespace Assets.Code.States {
 
         public void ExecuteState() {
             float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
+            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
 
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
 
@@ -40,6 +41,20 @@ namespace Assets.Code.States {
             } else if (LeftJoyV > -1) {
                 player.SetAxisInUse(false);
             }
+
+            player.comboMonitor.StationaryCombo();
+
+                switch (player.comboMonitor.GetComboButton()) {
+                case Constants.A_BUTTON:
+                    player.rb2d.velocity = new Vector2(25 * LeftJoyH, player.transform.position.y);
+                    break;
+                case Constants.B_BUTTON:
+                    Debug.Log("B button combo");
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         public void ExecuteState_Fixed() {

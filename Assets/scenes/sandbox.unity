@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 443299533}
   - component: {fileID: 443299532}
   - component: {fileID: 443299531}
+  - component: {fileID: 443299537}
   m_Layer: 0
   m_Name: Heavy-Character
   m_TagString: Untagged
@@ -307,6 +308,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   rb2d: {fileID: 0}
   movementStateMachine: {fileID: 0}
+  comboMonitor: {fileID: 0}
 --- !u!95 &443299533
 Animator:
   serializedVersion: 3
@@ -419,6 +421,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
+--- !u!114 &443299537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 443299530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cc9bc1edbb6754c9bf370cadc923ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentComboTimer: 3
+  currentComboState: 0
 --- !u!1 &896349394
 GameObject:
   m_ObjectHideFlags: 0

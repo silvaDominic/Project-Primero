@@ -23,12 +23,14 @@ namespace Assets.Code.Scripts {
         [HideInInspector] public Animator anim;
         [HideInInspector] public Rigidbody2D rb2d;
         [HideInInspector] public StateMachine movementStateMachine;
+        [HideInInspector] public ComboMonitor comboMonitor;
 
         void Awake() {
             // Initialize core player objects
             rb2d = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             movementStateMachine = GetComponent<StateMachine>();
+            comboMonitor = GetComponent<ComboMonitor>();
         }
 
         // Use this for initialization
