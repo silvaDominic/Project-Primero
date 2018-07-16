@@ -6,7 +6,6 @@ using Assets.Code.Scripts;
 
 namespace Assets.Code.States {
 
-    [RequireComponent(typeof(IState))]
     [RequireComponent(typeof(Player))]
     public class IdleState : IState {
 
@@ -24,7 +23,21 @@ namespace Assets.Code.States {
             float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
             float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
 
+            // Update animator with current speed of player
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
+
+            // Evaluate combos
+            // This must be executed before a Running check is done to prevent a switch in state before
+            /// input for a combo is evaluted.
+
+            /// Dash move
+            if (player.comboManager.CheckForCombo(player.simpleCombos[Constants.DASH])) {
+                Debug.Log("Combo success, performing action...");
+                player.rb2d.velocity = new Vector2(10 * LeftJoyH, player.transform.position.y);
+                player.comboManager.Reset();
+            } else {
+                Debug.Log("Not success");
+            }
 
             // Check speed and grounded properties in animator to decide which state to switch to
             if (Mathf.Abs(Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL)) > 0) {
@@ -41,20 +54,6 @@ namespace Assets.Code.States {
             } else if (LeftJoyV > -1) {
                 player.SetAxisInUse(false);
             }
-
-            player.comboMonitor.StationaryCombo();
-
-                switch (player.comboMonitor.GetComboButton()) {
-                case Constants.A_BUTTON:
-                    player.rb2d.velocity = new Vector2(25 * LeftJoyH, player.transform.position.y);
-                    break;
-                case Constants.B_BUTTON:
-                    Debug.Log("B button combo");
-                    break;
-                default:
-                    break;
-            }
-
         }
 
         public void ExecuteState_Fixed() {

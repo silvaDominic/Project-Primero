@@ -20,17 +20,18 @@ namespace Assets.Code.Scripts {
 
         private bool axisInUse = false;
         private int lockAxis = 0;
+        public Dictionary<string, SimpleCombo> simpleCombos;
         [HideInInspector] public Animator anim;
         [HideInInspector] public Rigidbody2D rb2d;
         [HideInInspector] public StateMachine movementStateMachine;
-        [HideInInspector] public ComboMonitor comboMonitor;
+        [HideInInspector] public ComboManager comboManager;
 
         void Awake() {
             // Initialize core player objects
             rb2d = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             movementStateMachine = GetComponent<StateMachine>();
-            comboMonitor = GetComponent<ComboMonitor>();
+            comboManager = GetComponent<ComboManager>();
         }
 
         // Use this for initialization
@@ -39,6 +40,10 @@ namespace Assets.Code.Scripts {
             foreach (string controller in Input.GetJoystickNames()) {
                 Debug.Log(controller);
             }
+
+            // Initialize simpleCombos dictionary and add all relavant combos for player
+            simpleCombos = new Dictionary<string, SimpleCombo>();
+            this.simpleCombos.Add(Constants.DASH, new SimpleCombo(BasicInput.A_Button, BasicInput.LeftAxisHorz, 3.0f));
 
             // Set default state to Idle
             this.movementStateMachine.ChangeState(new IdleState(this));
@@ -70,9 +75,3 @@ namespace Assets.Code.Scripts {
         }
     }
 }
-
-/*TODO 
- * 
- * Create 'action' camera
- * 
- */
