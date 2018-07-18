@@ -7,6 +7,7 @@ public class StateMachine : MonoBehaviour {
 
     private IState currentState;
     private IState previousState;
+    public string ID = "State Machine";
 
     /// <summary>
     /// Changes the current state to the new state that is passed in.

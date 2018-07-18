@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 95029679611311672}
   - component: {fileID: 114730821037456422}
   - component: {fileID: 114990362584095896}
+  - component: {fileID: 114554593930412720}
   - component: {fileID: 114151543786476930}
   m_Layer: 0
   m_Name: Heavy-Character
@@ -189,6 +190,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckThreshhold: 0.025
+--- !u!114 &114554593930412720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1430463726256128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffdfc35b44660b47b62de052b906e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: Fighting-State-Machine
 --- !u!114 &114730821037456422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,7 +221,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   rb2d: {fileID: 0}
   movementStateMachine: {fileID: 0}
-  fightingStateMachine: {fileID: 0}
   comboManager: {fileID: 0}
 --- !u!114 &114990362584095896
 MonoBehaviour:
@@ -221,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ffdfc35b44660b47b62de052b906e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: Movement-State-Machine
 --- !u!212 &212922195310835684
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Assets.Code.States;
+using Assets.Code.States.FightingStates;
+using Assets.Code.States.MovementStates;
 
 namespace Assets.Code.Scripts {
 
@@ -24,15 +25,21 @@ namespace Assets.Code.Scripts {
         [HideInInspector] public Animator anim;
         [HideInInspector] public Rigidbody2D rb2d;
         [HideInInspector] public StateMachine movementStateMachine;
-        //[HideInInspector] public StateMachine fightingStateMachine;
+        [HideInInspector] public StateMachine fightingStateMachine;
         [HideInInspector] public ComboManager comboManager;
 
         void Awake() {
             // Initialize core player objects
             rb2d = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
-            movementStateMachine = GetComponent<StateMachine>();
-            //fightingStateMachine = GetComponent<StateMachine>();
+            foreach (StateMachine stmchn in this.GetComponents<StateMachine>()) {
+                if (stmchn.ID == Constants.MOVEMENT_STATE_MACHINE) {
+                    movementStateMachine = stmchn;
+                }
+                if (stmchn.ID == Constants.FIGHTING_STATE_MACHINE) {
+                    fightingStateMachine = stmchn;
+                }
+            }
             comboManager = GetComponent<ComboManager>();
         }
 
@@ -50,6 +57,7 @@ namespace Assets.Code.Scripts {
             // Set default state to Idle
             //this.fightingStateMachine.ChangeState(new IdleState(this));
             this.movementStateMachine.ChangeState(new IdleState(this));
+            this.fightingStateMachine.ChangeState(new IdleFightingState(this));
         }
 
         // Update is called once per frame
@@ -57,6 +65,7 @@ namespace Assets.Code.Scripts {
             // Prevent rotation of player due to physics and execute regular update logic for state machine
             transform.rotation = Quaternion.Euler(new Vector3(lockAxis, lockAxis, lockAxis));
             //this.fightingStateMachine.ExecuteStateUpdate();
+            this.fightingStateMachine.ExecuteStateUpdate();
             this.movementStateMachine.ExecuteStateUpdate();
          }
 

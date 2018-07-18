@@ -68,7 +68,8 @@ namespace Assets.Code.Scripts {
         /// </summary>
         /// <param name="simpleCombo">The SimpleCombo object that contains the parameters for evaluation</param>
         /// <returns>A bool that represents whether the combo was a success or not</returns>
-        public bool EvaluatePrimaryInput(SimpleCombo simpleCombo) {
+        private bool EvaluatePrimaryInput(SimpleCombo simpleCombo) {
+            Debug.Log("-Evaluating Primary Input-");
             bool comboEvaluationResult = false;
             switch (simpleCombo.GetInput1Type()) {
                 case InputType.Button:
@@ -89,7 +90,8 @@ namespace Assets.Code.Scripts {
         /// the success of the player input
         /// </summary>
         /// <param name="simpleCombo">The SimpleCombo object that contains the parameters for evaluation</param>
-        public void EvaluteSecondaryInput(SimpleCombo simpleCombo) {
+        private void EvaluteSecondaryInput(SimpleCombo simpleCombo) {
+            Debug.Log("-Evaluating Secondard Input-");
             switch (simpleCombo.GetInput2Type()) {
                 case InputType.Button:
                     StartCoroutine(CheckForSecondButtonInput(simpleCombo.GetInput2Name()));
@@ -109,7 +111,7 @@ namespace Assets.Code.Scripts {
         /// </summary>
         /// <param name="simpleCombo">The SimpleCombo object that contains the parameters for evaluation</param>
         /// <returns>A bool that represents whether the combo was a success or not</returns>
-        public bool ButtonStartCombo(SimpleCombo simpleCombo) {
+        private bool ButtonStartCombo(SimpleCombo simpleCombo) {
             // Simple check for first button press
             if (Input.GetButtonDown(simpleCombo.GetInput1Name())) {
                 Debug.Log("Button 1 down, starting timer");
@@ -133,7 +135,7 @@ namespace Assets.Code.Scripts {
         /// </summary>
         /// <param name="simpleCombo"></param>
         /// <returns></returns>
-        public bool AxisStartCombo(SimpleCombo simpleCombo) {
+        private bool AxisStartCombo(SimpleCombo simpleCombo) {
             // Simple check for first button press
             if (Input.GetAxis(simpleCombo.GetInput1Name()) > 0) {
                 Debug.Log("Axis moved, starting timer");
@@ -158,9 +160,8 @@ namespace Assets.Code.Scripts {
         /// <param name="buttonTwo">A string that represents the desired button; button that must be pressed (within predefined window)
         /// to perform combo</param>
         /// <returns>An IEnumerator necessary for a Coroutine</returns>
-        public IEnumerator CheckForSecondButtonInput(string buttonTwo) {
+        private IEnumerator CheckForSecondButtonInput(string buttonTwo) {
             while(!Input.GetButtonDown(buttonTwo) && currentComboTimer != 0) {
-                Debug.Log(currentComboTimer);
                 Debug.Log("Combo window still available");
                 yield return null;
             }
@@ -183,9 +184,8 @@ namespace Assets.Code.Scripts {
         /// </summary>
         /// <param name="axis">A string that represents the desired axis; axis that initiates combo</param>
         /// <returns>An IEnumerator necessary for a Coroutine</returns>
-        public IEnumerator CheckForSecondAxisInput(string axis) {
+        private IEnumerator CheckForSecondAxisInput(string axis) {
             while (Input.GetAxis(axis) == 0 && currentComboTimer != 0) {
-                Debug.Log(currentComboTimer);
                 Debug.Log("Combo window still available");
                 yield return null;
             }
