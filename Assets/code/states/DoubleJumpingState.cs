@@ -28,14 +28,14 @@ namespace Assets.Code.States {
                 player.rb2d.velocity = new Vector2(player.rb2d.velocity.x, player.doubleJumpVelocity);
                 player.SetAxisInUse(false);
             }
-
-            //if (player.rb2d.velocity.y < 0) {
-            //    player.movementStateMachine.ChangeState(new FallingState(player));
-            //}
         }
 
         public void ExecuteState_Fixed() {
-
+            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
+            // Limit player's horizontal movement while airborn to a predefined fraction of their normal movement
+            player.rb2d.AddForce(((Vector2.right * player.movementForce) * LeftJoyH) / player.airBornMovementDetraction);
+            // Set speed in animator
+            player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
         }
 
         public void ExecuteState_Late() {

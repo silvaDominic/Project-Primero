@@ -26,21 +26,8 @@ namespace Assets.Code.States {
             // Update animator with current speed of player
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
 
-            // Evaluate combos
-            // This must be executed before a Running check is done to prevent a switch in state before
-            /// input for a combo is evaluted.
-
-            /// Dash move
-            if (player.comboManager.CheckForCombo(player.simpleCombos[Constants.DASH])) {
-                Debug.Log("Combo success, performing action...");
-                player.rb2d.velocity = new Vector2(10 * LeftJoyH, player.transform.position.y);
-                player.comboManager.Reset();
-            } else {
-                Debug.Log("Not success");
-            }
-
             // Check speed and grounded properties in animator to decide which state to switch to
-            if (Mathf.Abs(Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL)) > 0) {
+            if (Mathf.Abs(LeftJoyH) > 0) {
                 player.movementStateMachine.ChangeState(new RunningState(player));
             }
 

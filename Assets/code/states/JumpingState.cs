@@ -45,8 +45,9 @@ namespace Assets.Code.States {
         }
 
         public void ExecuteState_Fixed() {
+            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
             // Limit player's horizontal movement while airborn to a predefined fraction of their normal movement
-            player.rb2d.AddForce(((Vector2.right * player.movementForce) * Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL)) / player.airBornMovementDetraction);
+            player.rb2d.AddForce(((Vector2.right * player.movementForce) * LeftJoyH) / player.airBornMovementDetraction);
             // Set speed in animator
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
         }

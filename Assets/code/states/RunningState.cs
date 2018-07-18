@@ -53,8 +53,9 @@ namespace Assets.Code.States {
         }
 
         public void ExecuteState_Fixed() {
+            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
             // Apple horizontal force continuously according to joy axis direction
-            player.rb2d.AddForce((Vector2.right * player.movementForce) * Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL));
+            player.rb2d.AddForce((Vector2.right * player.movementForce) * LeftJoyH);
         }
 
         public void ExecuteState_Late() {

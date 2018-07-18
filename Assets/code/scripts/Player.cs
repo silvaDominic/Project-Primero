@@ -24,6 +24,7 @@ namespace Assets.Code.Scripts {
         [HideInInspector] public Animator anim;
         [HideInInspector] public Rigidbody2D rb2d;
         [HideInInspector] public StateMachine movementStateMachine;
+        //[HideInInspector] public StateMachine fightingStateMachine;
         [HideInInspector] public ComboManager comboManager;
 
         void Awake() {
@@ -31,6 +32,7 @@ namespace Assets.Code.Scripts {
             rb2d = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             movementStateMachine = GetComponent<StateMachine>();
+            //fightingStateMachine = GetComponent<StateMachine>();
             comboManager = GetComponent<ComboManager>();
         }
 
@@ -46,6 +48,7 @@ namespace Assets.Code.Scripts {
             this.simpleCombos.Add(Constants.DASH, new SimpleCombo(BasicInput.A_Button, BasicInput.LeftAxisHorz, 3.0f));
 
             // Set default state to Idle
+            //this.fightingStateMachine.ChangeState(new IdleState(this));
             this.movementStateMachine.ChangeState(new IdleState(this));
         }
 
@@ -53,16 +56,19 @@ namespace Assets.Code.Scripts {
          void Update() {
             // Prevent rotation of player due to physics and execute regular update logic for state machine
             transform.rotation = Quaternion.Euler(new Vector3(lockAxis, lockAxis, lockAxis));
+            //this.fightingStateMachine.ExecuteStateUpdate();
             this.movementStateMachine.ExecuteStateUpdate();
          }
 
         // Used for physics updates
          void FixedUpdate() {
             // Execute physics related logic for state machine
+            //this.fightingStateMachine.ExecuteStateFixedUpdate();
             this.movementStateMachine.ExecuteStateFixedUpdate();
          }
 
         private void LateUpdate() {
+            //this.fightingStateMachine.ExecuteStateLateUpdate();
             this.movementStateMachine.ExecuteStateLateUpdate();
         }
 
