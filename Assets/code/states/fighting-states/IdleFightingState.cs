@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Code.Scripts;
 using Assets.Code.Interfaces;
 
@@ -9,6 +7,7 @@ namespace Assets.Code.States.FightingStates {
     public class IdleFightingState : IState {
 
         private Player player;
+        private bool isMovementStateIdle;
 
         public IdleFightingState(Player player) {
             this.player = player;
@@ -16,15 +15,18 @@ namespace Assets.Code.States.FightingStates {
 
         public void EnterState() {
             player.anim.SetBool(Constants.IS_FIGHTING_IDLE_STATE, true);
+            isMovementStateIdle = player.anim.GetBool(Constants.IS_MOVEMENT_IDLE_STATE);
             Debug.Log("Idle Fighting State Loaded");
         }
 
         public void ExecuteState() {
-            if (player.comboManager.CheckForCombo(player.simpleCombos[Constants.DASH]) && player.anim.GetBool(Constants.IS_MOVEMENT_IDLE_STATE)) {
-                player.fightingStateMachine.ChangeState(new DashState(player));
-                Debug.Log("DASH SUCCESS");
-            } else {
-                Debug.Log("Waiting for Input");
+            if (player.gameControllerCombos[Constants.DASH].Check()) {
+                if (player.anim.GetBool(Constants.IS_MOVEMENT_IDLE_STATE)) {
+                    Debug.Log("DASH SUCCESS");
+                    player.fightingStateMachine.ChangeState(new DashState(player));
+                } else {
+                    Debug.Log("Waiting for Input");
+                }
             }
         }
 

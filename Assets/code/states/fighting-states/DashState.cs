@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Code.Interfaces;
 using Assets.Code.Scripts;
 
@@ -9,7 +7,7 @@ namespace Assets.Code.States.FightingStates {
     public class DashState : IState {
 
         private Player player;
-        private float startDashTimer = 0.1f;
+        private float startDashTimer = 0.10f;
         private float dashTimer;
         private int direction = 0;
 
@@ -24,6 +22,10 @@ namespace Assets.Code.States.FightingStates {
         }
 
         public void ExecuteState() {
+
+        }
+
+        public void ExecuteState_Fixed() {
             float LeftAxisH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
             if (LeftAxisH > 0) {
                 direction = 1;
@@ -33,17 +35,12 @@ namespace Assets.Code.States.FightingStates {
 
             if (dashTimer <= 0) {
                 dashTimer = startDashTimer;
-                player.comboManager.Reset();
                 player.rb2d.velocity = new Vector2(0, player.transform.position.y);
                 player.fightingStateMachine.SwitchToPreviousState();
             } else {
                 dashTimer -= Time.deltaTime;
                 player.rb2d.velocity = new Vector2(30 * direction, player.transform.position.y);
             }
-        }
-
-        public void ExecuteState_Fixed() {
-            
         }
 
         public void ExecuteState_Late() {

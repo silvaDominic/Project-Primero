@@ -21,12 +21,11 @@ namespace Assets.Code.Scripts {
 
         private bool axisInUse = false;
         private int lockAxis = 0;
-        public Dictionary<string, SimpleCombo> simpleCombos;
+        public Dictionary<string, GameControllerCombo> gameControllerCombos;
         [HideInInspector] public Animator anim;
         [HideInInspector] public Rigidbody2D rb2d;
         [HideInInspector] public StateMachine movementStateMachine;
         [HideInInspector] public StateMachine fightingStateMachine;
-        [HideInInspector] public ComboManager comboManager;
 
         void Awake() {
             // Initialize core player objects
@@ -40,7 +39,6 @@ namespace Assets.Code.Scripts {
                     fightingStateMachine = stmchn;
                 }
             }
-            comboManager = GetComponent<ComboManager>();
         }
 
         // Use this for initialization
@@ -50,9 +48,9 @@ namespace Assets.Code.Scripts {
                 Debug.Log(controller);
             }
 
-            // Initialize simpleCombos dictionary and add all relavant combos for player
-            simpleCombos = new Dictionary<string, SimpleCombo>();
-            this.simpleCombos.Add(Constants.DASH, new SimpleCombo(BasicInput.A_Button, BasicInput.LeftAxisHorz, 3.0f));
+            gameControllerCombos = new Dictionary<string, GameControllerCombo>();
+            gameControllerCombos.Add(Constants.DASH, new GameControllerCombo(ComboDirectory.dash));
+            gameControllerCombos.Add(Constants.SLAM, new GameControllerCombo(ComboDirectory.slam));
 
             // Set default state to Idle
             //this.fightingStateMachine.ChangeState(new IdleState(this));
@@ -64,7 +62,6 @@ namespace Assets.Code.Scripts {
          void Update() {
             // Prevent rotation of player due to physics and execute regular update logic for state machine
             transform.rotation = Quaternion.Euler(new Vector3(lockAxis, lockAxis, lockAxis));
-            //this.fightingStateMachine.ExecuteStateUpdate();
             this.fightingStateMachine.ExecuteStateUpdate();
             this.movementStateMachine.ExecuteStateUpdate();
          }
@@ -72,7 +69,7 @@ namespace Assets.Code.Scripts {
         // Used for physics updates
          void FixedUpdate() {
             // Execute physics related logic for state machine
-            //this.fightingStateMachine.ExecuteStateFixedUpdate();
+            this.fightingStateMachine.ExecuteStateFixedUpdate();
             this.movementStateMachine.ExecuteStateFixedUpdate();
          }
 

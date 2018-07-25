@@ -23,9 +23,16 @@ namespace Assets.Code.States.MovementStates {
 
         public void ExecuteState() {
             float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
+            float LeftJoyH = Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL);
+
+            float deadzone = 0.25f;
+            Vector2 stickInput = new Vector2(LeftJoyH, LeftJoyV);
+            if (stickInput.magnitude < deadzone) {
+                stickInput = Vector2.zero;
+            }
 
             // Change to Idle state if players speed falls below 0.01
-            if (player.anim.GetFloat(Constants.SPEED) < 0.01) {
+            if (player.anim.GetFloat(Constants.SPEED) < 0.001) {
                 player.movementStateMachine.ChangeState(new IdleState(player));
             }
 
@@ -54,8 +61,15 @@ namespace Assets.Code.States.MovementStates {
         }
 
         public void ExecuteState_Fixed() {
-            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
-            // Apple horizontal force continuously according to joy axis direction
+            float LeftJoyH = Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL);
+            float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
+
+            float deadzone = 0.75f;
+            Vector2 stickInput = new Vector2(LeftJoyH, LeftJoyV);
+            if (stickInput.magnitude < deadzone) {
+                stickInput = Vector2.zero;
+            }
+            // Apply horizontal force continuously according to joy axis direction
             player.rb2d.AddForce((Vector2.right * player.movementForce) * LeftJoyH);
         }
 

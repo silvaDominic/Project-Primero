@@ -22,14 +22,20 @@ namespace Assets.Code.States.MovementStates {
 
         public void ExecuteState() {
             float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
-            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
+            float LeftJoyH = Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL);
+
+            float deadzone = 0.25f;
+            Vector2 stickInput = new Vector2(LeftJoyH, LeftJoyV);
+            if (stickInput.magnitude < deadzone) {
+                stickInput = Vector2.zero;
+            }
 
             // Update animator with current speed of player
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
 
             // Check speed and grounded properties in animator to decide which state to switch to
             if (!player.anim.GetBool(Constants.IS_STANDARD_ATTACK_01)) {
-                if (Mathf.Abs(LeftJoyH) > 0) {
+                if (Mathf.Abs(LeftJoyH) > 0.001) {
                     player.movementStateMachine.ChangeState(new RunningState(player));
                 }
             }

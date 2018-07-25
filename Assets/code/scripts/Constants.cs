@@ -12,7 +12,15 @@ namespace Assets.Code.Scripts {
         public const string IS_JUMPING_STATE = "isJumping";
         public const string IS_DOUBLE_JUMPING_STATE = "isDoubleJumping";
         public const string SPEED = "Speed";
-        public const string IS_STANDARD_ATTACK_01 = "isPerformingSA-01";
+        public const string IS_STANDARD_ATTACK_01 = "isPerformingStA-01";
+        public const string IS_SPECIAL_ATTACK_01 = "isPerformingSpA-01";
+
+        public const string LEFT = "left";
+        public const string RIGHT = "right";
+        public const string UP = "up";
+        public const string DOWN = "down";
+        public const string LEFT_AND_RIGHT = "left_right";
+        public const string UP_AND_DOWN = "up_down";
 
         public const string LEFT_JOY_HORIZONTAL = "LeftJoystickHorizontal";
         public const string RIGHT_JOY_HORIZONTAL = "RightJoystickHorizontal";

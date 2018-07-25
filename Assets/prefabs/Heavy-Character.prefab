@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11cc9bc1edbb6754c9bf370cadc923ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentComboTimer: 3
+  currentComboTimer: 1
 --- !u!114 &114264697714288606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +221,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   rb2d: {fileID: 0}
   movementStateMachine: {fileID: 0}
+  fightingStateMachine: {fileID: 0}
   comboManager: {fileID: 0}
 --- !u!114 &114990362584095896
 MonoBehaviour:
