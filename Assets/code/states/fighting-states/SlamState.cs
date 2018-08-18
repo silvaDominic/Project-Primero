@@ -6,12 +6,12 @@ namespace Assets.Code.States.FightingStates {
 
     public class SlamState : IState {
 
-        Player player;
+        PlayerController player;
 
         private float currentYpos;
         private float fallSpeed;
 
-        public SlamState(Player player) {
+        public SlamState(PlayerController player) {
             this.player = player;
         }
 

@@ -6,12 +6,12 @@ namespace Assets.Code.States.FightingStates {
 
     public class DashState : IState {
 
-        private Player player;
+        private PlayerController player;
         private float startDashTimer = 0.10f;
         private float dashTimer;
         private int direction = 0;
 
-        public DashState(Player player) {
+        public DashState(PlayerController player) {
             this.player = player;
         }
 
@@ -26,10 +26,10 @@ namespace Assets.Code.States.FightingStates {
         }
 
         public void ExecuteState_Fixed() {
-            float LeftAxisH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
-            if (LeftAxisH > 0) {
+            float LeftJoyH = Input.GetAxisRaw(Constants.LEFT_JOY_HORIZONTAL);
+            if (LeftJoyH > 0) {
                 direction = 1;
-            } else if (LeftAxisH < 0) {
+            } else if (LeftJoyH < 0) {
                 direction = -1;
             }
 

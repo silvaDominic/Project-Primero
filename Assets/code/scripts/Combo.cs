@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Specialized;
 
 namespace Assets.Code.Scripts {
 
@@ -8,26 +10,24 @@ namespace Assets.Code.Scripts {
     /// </summary>
     public class Combo {
 
-        private string input1;
-        private string input2;
+        //private string[] inputs;
+        private float chargeTimer;
         private float comboTimer = 1.0f;
+        private Tuple<string, string>[] inputs;
 
-        public Combo(string input1, string input2, float comboTimer) {
-            this.input1 = input1;
-            this.input2 = input2;
+        public Combo(Tuple<string, string>[] inputs, float comboTimer) {
+            this.inputs = inputs;
             this.comboTimer = comboTimer;
         }
 
-        public string GetInput1() {
-            return this.input1;
+        public Combo(Tuple<string, string>[] inputs, float comboTimer, float chargeTimer) {
+            this.inputs = inputs;
+            this.comboTimer = comboTimer;
+            this.chargeTimer = chargeTimer;
         }
 
-        public string GetInput2() {
-            return this.input2;
-        }
-
-        public string[] GetAllInputs() {
-            return new string[] {this.input1, this.input2};
+        public Tuple<string, string>[] GetInputs() {
+            return this.inputs;
         }
 
         public float ComboTimer {
@@ -37,6 +37,16 @@ namespace Assets.Code.Scripts {
 
             set {
                 comboTimer = value;
+            }
+        }
+
+        public float ChargeTimer {
+            get {
+                return chargeTimer;
+            }
+
+            set {
+                chargeTimer = value;
             }
         }
     }

@@ -7,12 +7,12 @@ namespace Assets.Code.Scripts {
 
     public class GroundCheck : MonoBehaviour {
 
-        private Player player;
+        private PlayerController player;
         private RaycastHit2D groundCheck;
         public float groundCheckThreshhold = 0f;
 
         private void Start() {
-            player = GetComponentInParent<Player>();
+            player = GetComponentInParent<PlayerController>();
         }
 
         private void Update() {

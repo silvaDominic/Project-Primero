@@ -6,12 +6,12 @@ using Assets.Code.Scripts;
 
 namespace Assets.Code.States.MovementStates {
 
-    [RequireComponent(typeof(Player))]
+    [RequireComponent(typeof(PlayerController))]
     public class IdleState : IState {
 
-        private Player player;
+        private PlayerController player;
 
-        public IdleState(Player player) {
+        public IdleState(PlayerController player) {
             this.player = player;
         }
 
@@ -21,14 +21,8 @@ namespace Assets.Code.States.MovementStates {
         }
 
         public void ExecuteState() {
-            float LeftJoyV = Input.GetAxis(Constants.LEFT_JOY_VERTICAL);
+            float LeftJoyV = Input.GetAxisRaw(Constants.LEFT_JOY_VERTICAL);
             float LeftJoyH = Input.GetAxis(Constants.LEFT_JOY_HORIZONTAL);
-
-            float deadzone = 0.25f;
-            Vector2 stickInput = new Vector2(LeftJoyH, LeftJoyV);
-            if (stickInput.magnitude < deadzone) {
-                stickInput = Vector2.zero;
-            }
 
             // Update animator with current speed of player
             player.anim.SetFloat(Constants.SPEED, Mathf.Abs(player.rb2d.velocity.x));
@@ -56,7 +50,7 @@ namespace Assets.Code.States.MovementStates {
         }
 
         public void ExecuteState_Late() {
-            
+
         }
 
         public void ExitState() {

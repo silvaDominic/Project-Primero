@@ -13,8 +13,13 @@ namespace Assets.Code.Scripts {
         public const string IS_DOUBLE_JUMPING_STATE = "isDoubleJumping";
         public const string SPEED = "Speed";
         public const string IS_STANDARD_ATTACK_01 = "isPerformingStA-01";
+        public const string IS_STANDARD_ATTACK_02 = "isPerformingStA-02";
         public const string IS_SPECIAL_ATTACK_01 = "isPerformingSpA-01";
+        public const string IS_POWER_ATTACK_01 = "isPerformingPwrA-01";
 
+        public const string BUTTON = "button";
+        public const string LEFTJOY = "left_joy";
+        public const string RIGHTJOY = "right_joy";
         public const string LEFT = "left";
         public const string RIGHT = "right";
         public const string UP = "up";
@@ -38,5 +43,7 @@ namespace Assets.Code.Scripts {
 
         public const string DASH = "Dash";
         public const string SLAM = "Slam";
+        public const string PEBBLE_SHOT = "Pebble_Shot";
+        public const string CRYSTAL_SHARD = "Crystal_Shard";
     }
 }

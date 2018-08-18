@@ -6,14 +6,14 @@ using Assets.Code.States.FightingStates;
 namespace Assets.Code.States.MovementStates {
 
     [RequireComponent(typeof(IState))]
-    [RequireComponent(typeof(Player))]
+    [RequireComponent(typeof(PlayerController))]
     public class DoubleJumpingState : IState {
 
-        private Player player;
+        private PlayerController player;
         private bool isDoubleJumping;
         private bool isPerformingFightingMove;
 
-        public DoubleJumpingState(Player player) {
+        public DoubleJumpingState(PlayerController player) {
             this.player = player;
         }
 

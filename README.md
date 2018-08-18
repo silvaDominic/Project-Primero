@@ -6,4 +6,4 @@ to act as my first original game and,
 to be the framework of a more comprehensive arena brawler I'd like to make down the road
 
 Mechanically, this game will be very similar to Super Smash Brothers. 
-The design of the game will be inspired by RPS however.
+Some mechanics and the character design of the game will be inspired by RPS however.

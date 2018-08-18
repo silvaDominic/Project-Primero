@@ -6,10 +6,10 @@ namespace Assets.Code.States.FightingStates {
 
     public class IdleFightingState : IState {
 
-        private Player player;
+        private PlayerController player;
         private bool isMovementStateIdle;
 
-        public IdleFightingState(Player player) {
+        public IdleFightingState(PlayerController player) {
             this.player = player;
         }
 
@@ -24,9 +24,19 @@ namespace Assets.Code.States.FightingStates {
                 if (player.anim.GetBool(Constants.IS_MOVEMENT_IDLE_STATE)) {
                     Debug.Log("DASH SUCCESS");
                     player.fightingStateMachine.ChangeState(new DashState(player));
-                } else {
-                    Debug.Log("Waiting for Input");
                 }
+            }
+
+            if (player.gameControllerCombos[Constants.PEBBLE_SHOT].Check()) {
+                if (player.anim.GetBool(Constants.IS_MOVEMENT_IDLE_STATE)) {
+                    Debug.Log("PEBBLE SHOT SUCCESS");
+                    player.fightingStateMachine.ChangeState(new PebbleShotState(player));
+                }
+            }
+
+            if (player.gameControllerCombos[Constants.CRYSTAL_SHARD].Check()) {
+                Debug.Log("CRYSTAL SHARD SUCCESS");
+                player.fightingStateMachine.ChangeState(new CrystalShardState(player));
             }
         }
 
